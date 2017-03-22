@@ -16,12 +16,183 @@ public class Posts
 //    int addOrEditPost(string postTitle, string postImg, string postDescription, string postContent, int postStar, int postCategoryId, bool postState);
 //    int countNewPostByDay(int dayAgo);
 //    int linkCommentToPost(Comments c, int postId);
-//    DataTable getCommentOfPost(int postId);
 
     
 	public Posts()
 	{
-     
+    }
 
-	}
+    #region getAllData()
+    public  DataTable getAllData()
+    {
+        DataTable objTbl = new DataTable();
+        try
+        {
+            SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
+            sqlConn.Open();
+            SqlCommand cmd = sqlConn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM tblPost "; //or SELECT * FROM tblPost.Id, tblPost.Name .... 
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            sqlConn.Close();
+            sqlConn.Dispose();
+            objTbl = ds.Tables[0];
+
+        }
+        catch (Exception e)
+        {
+            Console.Write(e);
+            return new DataTable();
+        }
+        finally
+        {
+        }
+        return objTbl;
+
+    }
+    #endregion
+
+    #region getDataByAuthor(string userId, int state = 1)
+    public DataTable getDataByAuthor(string userId, int state = 1)
+    {
+        DataTable objTbl = new DataTable();
+        try
+        {
+            SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
+            sqlConn.Open();
+            SqlCommand cmd = sqlConn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM tblPost WHERE tblPost.PostAuthorId =  @PostAuthorId "; //or SELECT * FROM tblPost.Id, tblPost.Name .... 
+            if (state == 0) { cmd.CommandText += " AND tblPost.State = 0 "; }
+            else
+            {
+                cmd.CommandText += " AND tblPost.State = 1 ";
+            }
+            cmd.Parameters.Add("PostAuthorId", SqlDbType.Int).Value = userId;
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            sqlConn.Close();
+            sqlConn.Dispose();
+            objTbl = ds.Tables[0];
+
+        }
+        catch (Exception e)
+        {
+            Console.Write(e);
+            return new DataTable();
+        }
+        finally
+        {
+        }
+        return objTbl;
+
+    }
+    #endregion
+
+    #region countNewPostByDay(string userId, int dayAgo)
+    public int countNewPostByDay(string userId, int dayAgo = 0, int state = 1)
+    {
+       
+        try
+        {
+            SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
+            sqlConn.Open();
+            SqlCommand cmd = sqlConn.CreateCommand();
+            cmd.CommandText = "SELECT COUNT (tblPost.PostId) FROM tblPost WHERE tblPost.PostAuthorId =  @PostAuthorId "; //or SELECT * FROM tblPost.Id, tblPost.Name .... 
+            if (state == 0) { cmd.CommandText += " AND tblPost.State = 0 "; }
+            else
+            {
+                cmd.CommandText += " AND tblPost.State = 1 ";
+            }
+            if (dayAgo!= 0)
+            {
+                cmd.CommandText += " AND tblPost.PostDayCreate BETWEEN DATE_SUB(DATE(NOW()),INTERVAL " + dayAgo + " DAY  ) AND DATE_SUB(DATE(NOW)),INTERVAL 0 DAY )";
+            }
+            cmd.Parameters.Add("PostAuthorId", SqlDbType.Int).Value = userId;
+            var count = cmd.ExecuteScalar();
+            sqlConn.Close();
+            sqlConn.Dispose();
+            if(count!=null) return int.Parse(count.ToString());
+          }
+        catch (Exception e)
+        {
+            Console.Write(e);
+            return -1;
+        }
+        return -1;
+    }
+    #endregion
+
+    #region addPost 
+    public int addPost(string postTitle, string postImg, string postDescription, string postContent, string postAuthorId, string postDayCreate, string postCategoryId, bool postState)
+    {
+        try
+        {
+            SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
+            sqlConn.Open();
+            SqlCommand cmd = sqlConn.CreateCommand();
+            cmd.CommandText = " INSERT INTO tblPost (  PostTitle , PostImg, PostDescription ,PostContent , PostAuthorId ,PostDayCreate , PostDayCreate ,PostCategoryId ,PostState  ) "
+                                        + " VALUES (  @PostTitle , @PostImg , @PostDescription ,@PostContent , @PostAuthorId ,@PostDayCreate , @PostDayCreate , @PostCategoryId, @PostState ) ; "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            cmd.Parameters.Add("PostTitle", SqlDbType.NVarChar).Value = (postTitle);
+            cmd.Parameters.Add("PostImg", SqlDbType.NVarChar).Value = (postImg);
+            cmd.Parameters.Add("PostDescription", SqlDbType.NVarChar).Value = (postDescription);
+            cmd.Parameters.Add("PostContent", SqlDbType.NVarChar).Value = (postContent);
+            cmd.Parameters.Add("PostAuthorId", SqlDbType.NVarChar).Value = (postAuthorId);
+            cmd.Parameters.Add("PostDayCreate", SqlDbType.NVarChar).Value = (postDayCreate);
+            cmd.Parameters.Add("PostCategoryId", SqlDbType.NVarChar).Value = (postCategoryId);
+            cmd.Parameters.Add("PostState", SqlDbType.Bit).Value = (postState);
+
+            cmd.ExecuteNonQuery();
+            sqlConn.Close();
+            sqlConn.Dispose();
+        }
+        catch (Exception e)
+        {
+            Console.Write(e);
+            return 0;
+        }
+        return 1;
+    }
+    #endregion 
+
+    #region addOrEditPost
+    public int addOrEditPost( string postId,string postTitle, string postImg, string postDescription, string postContent, string postAuthorId, string postDayCreate, string postCategoryId, bool postState)
+    {
+        try
+        {
+            SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
+            sqlConn.Open();
+            SqlCommand cmd = sqlConn.CreateCommand();
+            cmd.CommandText = " IF NOT EXIST (SELECT tblPost.PostTitle FROM tblPost WHERE tblPost.PostId = @PostId ) "
+                + " BEGIN  INSERT INTO tblPost (  PostTitle , PostImg, PostDescription ,PostContent , PostAuthorId ,PostDayCreate , PostDayCreate ,PostCategoryId ,PostState  ) "
+                                        + " VALUES (  @PostTitle , @PostImg , @PostDescription ,@PostContent , @PostAuthorId ,@PostDayCreate  , @PostCategoryId, @PostState ) "
+                                        +" END "
+               + " ELSE BEGIN UPDATE  tblPost SET PostTitle=@PostTitle AND  PostImg=@PostImg AND PostDescription= @PostDescription AND   PostContent = @PostContent AND PostAuthorId= @PostAuthorId AND PostDayCreate=@PostDayCreate AND  PostCategoryId=@PostCategoryId AND PostState =@PostState  END "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            cmd.Parameters.Add("PostId", SqlDbType.Int).Value = (postId);
+            cmd.Parameters.Add("PostTitle", SqlDbType.NVarChar).Value = (postTitle);
+            cmd.Parameters.Add("PostImg", SqlDbType.NVarChar).Value = (postImg);
+            cmd.Parameters.Add("PostDescription", SqlDbType.NVarChar).Value = (postDescription);
+            cmd.Parameters.Add("PostContent", SqlDbType.NVarChar).Value = (postContent);
+            cmd.Parameters.Add("PostAuthorId", SqlDbType.NVarChar).Value = (postAuthorId);
+            cmd.Parameters.Add("PostDayCreate", SqlDbType.NVarChar).Value = (postDayCreate);
+            cmd.Parameters.Add("PostCategoryId", SqlDbType.NVarChar).Value = (postCategoryId);
+            cmd.Parameters.Add("PostState", SqlDbType.Bit).Value = (postState);
+
+            cmd.ExecuteNonQuery();
+            sqlConn.Close();
+            sqlConn.Dispose();
+        }
+        catch (Exception e)
+        {
+            Console.Write(e);
+            return 0;
+        }
+        return 1;
+    }
+    #endregion 
+
+    
 }

@@ -17,6 +17,8 @@ public class Users
 	{
 
 	}
+
+    #region menthod getDataAll
     DataTable getDataAll()
     {
         DataTable objTbl = new DataTable();
@@ -38,6 +40,7 @@ public class Users
         catch(Exception e)
         {
             Console.Write(e);
+            return new DataTable();
         }
         finally
         {
@@ -45,6 +48,7 @@ public class Users
         return objTbl;
        
     }
+    #endregion
     DataTable getUserProfileById( string UserId)
     {
         DataTable objTbl = new DataTable();
@@ -67,6 +71,7 @@ public class Users
         catch (Exception e)
         {
             Console.Write(e);
+            return new DataTable();
         }
         finally
         {
@@ -95,6 +100,7 @@ public class Users
         catch (Exception e)
         {
             Console.Write(e);
+            return new DataTable();
         }
         finally
         {
@@ -128,6 +134,7 @@ public class Users
         catch (Exception e)
         {
             Console.Write(e);
+            return 0;
         }
         return 0;
 
