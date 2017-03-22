@@ -15,8 +15,6 @@ public class Visistors
     //int countVisitorOnline();
 	public Visistors()
 	{
-		//
-		// TODO: Add constructor logic here
-		//
+
 	}
 }

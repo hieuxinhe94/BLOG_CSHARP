@@ -97,7 +97,6 @@ h1, h2, h3, h4, h5, h6, figure {
   left: 0;
   right: 0;
   content: '';
- 
   background: #fbf2eb;
 }
 .fh5co-nav #fh5co-logo {
@@ -117,7 +116,7 @@ h1, h2, h3, h4, h5, h6, figure {
   bottom: 0;
   left: -10px;
   right: 0;
-  width: 350px;
+  width: 150px;
   height: 150px;
   background: #fbf2eb;
   content: "";
@@ -660,8 +659,6 @@ h1, h2, h3, h4, h5, h6, figure {
   left: -10px;
   right: 10px;
   content: '';
-  width: 350px;
-height: 150px;
   background: #fbf2eb;
   z-index: -1;
 }
