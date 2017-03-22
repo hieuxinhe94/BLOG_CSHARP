@@ -1,0 +1,174 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> <%: Page.Title %>  - NƠI BÀN LUẬN CỦA ANH EM CNTT  </title>
+    <meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Slab:400,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
+	
+    	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+
+	<link rel="stylesheet" href="css/magnific-popup.css">
+
+	<link rel="stylesheet" href="css/flexslider.css">
+
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="js/modernizr-2.6.2.min.js"></script>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                 <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+
+
+        <nav class="fh5co-nav" role="navigation">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="top-menu">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-7 text-left menu-1">
+								<ul>
+									<li class="active"><a href="Default.aspx">CODELIFE</a></li>
+									<li><a href="blog.html">GÓC CODER </a></li>
+									<li class="has-dropdown">
+										<a href="blog.html">CHUYÊN MỤC</a>
+										<ul class="dropdown">
+											<li><a href="#">HỌC TẬP </a></li>
+											<li><a href="#">ĂN—NGỦ—GAME</a></li>
+											<li><a href="#">GÁI GÚ</a></li>
+											<li><a href="#">THỜI TRANG</a></li>
+										</ul>
+									</li>
+									<li><a href="about.html">KỸ NĂNG</a></li>
+									<li><a href="contact.html">TỰ SƯỚNG </a></li>
+								</ul>
+							</div>
+							<div class="col-sm-5">
+								<ul class="fh5co-social-icons">
+									<li><a href="#"><i class="icon-twitter-with-circle"></i></a></li>
+									<li><a href="#"><i class="icon-facebook-with-circle"></i></a></li>
+									<li><a href="#"><i class="icon-linkedin-with-circle"></i></a></li>
+									<li><a href="#"><i class="icon-dribbble-with-circle"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 text-center menu-2">
+					<div id="fh5co-logo">
+						<h1>
+							<a href="index.html">
+							NgheAnSunshine<span>.</span>
+							<small>Lưu giử dùm tôi những điều thú vị</small>
+							</a>
+						</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+     
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+
+
+           <footer id="fh5co-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col-md-4 fh5co-widget">
+					<h4>NgheAnSunshine.info</h4>
+					<p class="" style="font-size:12px;">Lưu giử giùm tôi những điều thú vị .</p>
+              <p class="" style="font-size:12px;"> Chứng kiến dùm sự lớn lên của nghề DEV trong tôi . </p>
+               <p class="" style="font-size:12px;">Không nhàm chán , tẻ nhạt  và vô vị như trước nửa . </p>
+				</div>
+				<div class="col-md-4 col-md-push-1">
+				
+				</div>
+
+				<div class="col-md-4 col-md-push-1">
+					<h4>Thông tin liên hệ</h4>
+					<ul class="fh5co-footer-links">
+						<li>54K4 — IT — Vinh University </li>
+						<li><a href="tel://1234567920">+849 6735 6524</a></li>
+						<li><a href="mailto:hieuxinhe94@gmail.com">hieuxinhe94@gmail.com</a></li>
+						<li><a href="http://ngheansunshine.info">Ngheansunshine.info  </a></li>
+					</ul>
+				</div>
+
+			</div>
+
+			<div class="row copyright">
+				<div class="col-md-12 text-center">
+					<p>
+						<small class="block">&copy; 2017 Sử  dụng thiết kế từ  <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a> </small> 
+						<small class="block">Hiếu Phạm <a href="#" target="_blank"></a></small>
+					</p>
+					<p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-linkedin"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+						</ul>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</footer>
+
+        </div>
+        <div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+    </form>
+    	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="js/jquery.flexslider-min.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Main -->
+	<script src="js/main.js"></script>
+</body>
+</html>

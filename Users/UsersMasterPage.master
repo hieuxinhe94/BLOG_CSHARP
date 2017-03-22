@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="UsersMasterPage.master.cs" Inherits="Users_UsersMasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title> TRANG CÁ NHÂN </title>
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+       <div class="" style="float:right; "><%=userAccount.ToString() %>  Tên người dùng
+            <a href="#" style="color:blue">Thoát</a>
+    <p>       <span><%=userSlogen.ToString() %> </span></p>
+       
+           </div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>
