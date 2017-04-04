@@ -23,7 +23,7 @@ public class Posts
     }
 
     #region getAllData()
-    public  DataTable getAllData()
+    public  DataTable getAllData(int star = -1, int limit = 20 , bool random = false)
     {
         DataTable objTbl = new DataTable();
         try
@@ -31,7 +31,9 @@ public class Posts
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM tblPost "; //or SELECT * FROM tblPost.Id, tblPost.Name .... 
+            cmd.CommandText = "SELECT TOP "+ limit +" * FROM tblPost "; //or SELECT * FROM tblPost.Id, tblPost.Name .... 
+            if (star != -1) { cmd.CommandText += " WHERE PostStar = "+star+" ";  }
+            if (random) {cmd.CommandText+=" ORDER BY NEWID() " ;}
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             DataSet ds = new DataSet();
@@ -54,8 +56,8 @@ public class Posts
     }
     #endregion
 
-    #region getDataByAuthor(string userId, int state = 1)
-    public DataTable getDataByAuthor(string userId, int state = 1)
+    #region getDataByCategory(string userId, int state = 1)
+    public DataTable getDataByCategory(string postCategoryId, int state = 1, int top = 20)
     {
         DataTable objTbl = new DataTable();
         try
@@ -63,12 +65,53 @@ public class Posts
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM tblPost WHERE tblPost.PostAuthorId =  @PostAuthorId "; //or SELECT * FROM tblPost.Id, tblPost.Name .... 
-            if (state == 0) { cmd.CommandText += " AND tblPost.State = 0 "; }
+            cmd.CommandText = " SELECT TOP " + top + " * FROM tblPost WHERE tblPost.PostCategoryId =  @PostCategoryId "; //or SELECT * FROM tblPost.Id, tblPost.Name .... 
+            if (state == 0) { cmd.CommandText += " AND tblPost.PostState = 0 "; }
             else
             {
-                cmd.CommandText += " AND tblPost.State = 1 ";
+                cmd.CommandText += " AND tblPost.PostState = 1 ";
             }
+
+            cmd.Parameters.Add("PostAuthorId", SqlDbType.Int).Value = postCategoryId;
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd;
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            sqlConn.Close();
+            sqlConn.Dispose();
+            objTbl = ds.Tables[0];
+
+        }
+        catch (Exception e)
+        {
+            Console.Write(e);
+            return new DataTable();
+        }
+        finally
+        {
+        }
+        return objTbl;
+
+    }
+    #endregion
+
+
+    #region getDataByAuthor(string userId, int state = 1)
+    public DataTable getDataByAuthor(string userId, int state = 1, int top = 100)
+    {
+        DataTable objTbl = new DataTable();
+        try
+        {
+            SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
+            sqlConn.Open();
+            SqlCommand cmd = sqlConn.CreateCommand();
+            cmd.CommandText = " SELECT TOP "+top+" * FROM tblPost WHERE tblPost.PostAuthorId =  @PostAuthorId "; //or SELECT * FROM tblPost.Id, tblPost.Name .... 
+            if (state == 0) { cmd.CommandText += " AND tblPost.PostState = 0 "; }
+            else
+            {
+                cmd.CommandText += " AND tblPost.PostState = 1 ";
+            }
+
             cmd.Parameters.Add("PostAuthorId", SqlDbType.Int).Value = userId;
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd;
@@ -127,21 +170,21 @@ public class Posts
     #endregion
 
     #region addPost 
-    public int addPost(string postTitle, string postImg, string postDescription, string postContent, string postAuthorId, string postDayCreate, string postCategoryId, bool postState)
+    public int addPost(string postTitle, string postImg, string postDescription, string postContent, string postAuthorId, string postCategoryId, bool postState)
     {
         try
         {
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = " INSERT INTO tblPost (  PostTitle , PostImg, PostDescription ,PostContent , PostAuthorId ,PostDayCreate , PostDayCreate ,PostCategoryId ,PostState  ) "
-                                        + " VALUES (  @PostTitle , @PostImg , @PostDescription ,@PostContent , @PostAuthorId ,@PostDayCreate , @PostDayCreate , @PostCategoryId, @PostState ) ; "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            cmd.CommandText = " INSERT INTO tblPost (  PostTitle , PostImg, PostDescription ,PostContent , PostAuthorId ,PostStar  ,PostCategoryId ,PostState ,PostDayCreate ) "
+                                        + " VALUES (  @PostTitle , @PostImg , @PostDescription ,@PostContent , @PostAuthorId ,@PostStar  , @PostCategoryId, @PostState,getdate() ) ; "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
             cmd.Parameters.Add("PostTitle", SqlDbType.NVarChar).Value = (postTitle);
             cmd.Parameters.Add("PostImg", SqlDbType.NVarChar).Value = (postImg);
             cmd.Parameters.Add("PostDescription", SqlDbType.NVarChar).Value = (postDescription);
             cmd.Parameters.Add("PostContent", SqlDbType.NVarChar).Value = (postContent);
             cmd.Parameters.Add("PostAuthorId", SqlDbType.NVarChar).Value = (postAuthorId);
-            cmd.Parameters.Add("PostDayCreate", SqlDbType.NVarChar).Value = (postDayCreate);
+            cmd.Parameters.Add("PostStar", SqlDbType.Int).Value = 1;
             cmd.Parameters.Add("PostCategoryId", SqlDbType.NVarChar).Value = (postCategoryId);
             cmd.Parameters.Add("PostState", SqlDbType.Bit).Value = (postState);
 
@@ -194,5 +237,31 @@ public class Posts
     }
     #endregion 
 
-    
+    #region size()
+    public int size(int state = -1)
+    {
+        DataTable objTbl = new DataTable();
+        try
+        {
+            SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
+            sqlConn.Open();
+            SqlCommand cmd = sqlConn.CreateCommand();
+            cmd.CommandText = "SELECT COUNT (tblPost.PostId) FROM tblPost "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            if (state != -1)
+            {
+                cmd.CommandText += " WHERE tblPost.State = " + state + "";
+            }
+            var passWord = cmd.ExecuteScalar();
+
+            sqlConn.Close();
+            sqlConn.Dispose();
+            return (int)passWord;
+        }
+        catch (Exception e)
+        {
+            Console.Write(e);
+            return 0;
+        }
+    }
+    #endregion
 }

@@ -58,9 +58,9 @@
 							<div class="col-sm-7 text-left menu-1">
 								<ul>
 									<li class="active"><a href="Default.aspx">CODELIFE</a></li>
-									<li><a href="blog.html">GÓC CODER </a></li>
+									<li><a href="Technical.aspx">GÓC CODER </a></li>
 									<li class="has-dropdown">
-										<a href="blog.html">CHUYÊN MỤC</a>
+										<a href="CategoryPage.aspx">CHUYÊN MỤC</a>
 										<ul class="dropdown">
 											<li><a href="#">HỌC TẬP </a></li>
 											<li><a href="#">ĂN—NGỦ—GAME</a></li>
@@ -68,8 +68,8 @@
 											<li><a href="#">THỜI TRANG</a></li>
 										</ul>
 									</li>
-									<li><a href="about.html">KỸ NĂNG</a></li>
-									<li><a href="contact.html">TỰ SƯỚNG </a></li>
+									<li><a href="CategoryPage.aspx">KỸ NĂNG</a></li>
+									<li><a href="IntagramPost.aspx">TỰ SƯỚNG </a></li>
 								</ul>
 							</div>
 							<div class="col-sm-5">
@@ -78,33 +78,20 @@
 									<li><a href="#"><i class="icon-facebook-with-circle"></i></a></li>
 									<li><a href="#"><i class="icon-linkedin-with-circle"></i></a></li>
 									<li><a href="#"><i class="icon-dribbble-with-circle"></i></a></li>
+                                    <li><a href="/Users/login.aspx">Đăng nhập</a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-12 text-center menu-2">
-					<div id="fh5co-logo">
-						<h1>
-							<a href="index.html">
-							NgheAnSunshine<span>.</span>
-							<small>Lưu giử dùm tôi những điều thú vị</small>
-							</a>
-						</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-	</nav>
-     
+	
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
 
-
+            </div>
            <footer id="fh5co-footer" role="contentinfo">
 		<div class="container">
 			<div class="row row-pb-md">

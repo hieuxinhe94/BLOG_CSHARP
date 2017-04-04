@@ -9,32 +9,32 @@
 <section id="contact" class="content-section text-center">
         <div class="contact-section">
             <div class="container">
-              <h2>Contact Us</h2>
-              <p>Feel free to shout us by feeling the contact form or visiting our social network sites like Fackebook,Whatsapp,Twitter.</p>
+              <h2>Báo cáo , phản hồi </h2>
+              <p>Bạn có cảm thấy hay ho như Fackebook,Whatsapp,Twitter ?. Hãy cho chúng tôi nhận xét</p>
               <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                   <form class="form-horizontal">
                     <div class="form-group">
-                      <label for="exampleInputName2">Name</label>
-                      <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+                      <label for="exampleInputName2">Tên </label>
+                      <input type="text" class="form-control" id="exampleInputName2" placeholder="Hiệp sỹ bóng tối , Sát thủ bóng dâm ,... ">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail2">Email</label>
-                      <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+                      <input type="email" class="form-control" id="exampleInputEmail2" placeholder="hieuxinhe94@gmail.com">
                     </div>
                     <div class="form-group ">
-                      <label for="exampleInputText">Your Message</label>
-                     <textarea  class="form-control" placeholder="Description"></textarea> 
+                      <label for="exampleInputText">Lời nhắn nhủ</label>
+                     <textarea  class="form-control" placeholder="I love you sooo much "></textarea> 
                     </div>
-                    <button type="submit" class="btn btn-default">Send Message</button>
+                    <button type="submit" class="btn btn-default">Hoàn thành</button>
                   </form>
 
                   <hr>
-                    <h3>Our Social Sites</h3>
+                    <h3>Hoặc </h3>
                   <ul class="list-inline banner-social-buttons">
                     <li><a href="#" class="btn btn-default btn-lg"><i class="fa fa-twitter"> <span class="network-name">Twitter</span></i></a></li>
                     <li><a href="#" class="btn btn-default btn-lg"><i class="fa fa-facebook"> <span class="network-name">Facebook</span></i></a></li>
-                    <li><a href="#" class="btn btn-default btn-lg"><i class="fa fa-youtube-play"> <span class="network-name">Youtube</span></i></a></li>
+                    <li><a href="#" class="btn btn-default btn-lg"><i class="fa fa-youtube-play"> <span class="network-name">Github</span></i></a></li>
                   </ul>
                 </div>
               </div>

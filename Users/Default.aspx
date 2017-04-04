@@ -21,8 +21,6 @@
                     <li class="tile tile-small last tile-2 slideTextRight" data-page-type="r-page" data-page-name="random-r-page">
                          <div><p><a href="ListPosts.aspx">Quản lý bài đăng</a></p></div>
                           <div><p class="glyphicon glyphicon-list"> </p></div>
-                      
-                      
                     </li>
                     <li class="tile tile-big tile-3 fig-tile" data-page-type="r-page" data-page-name="random-r-page">
                         <figure>
@@ -73,8 +71,7 @@
                 </div>
             </ul>
         </div><!--end dashboard-->
-    </div>
-
+    
 
 </asp:Content>
 

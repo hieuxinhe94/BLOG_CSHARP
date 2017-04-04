@@ -125,6 +125,10 @@ h1, h2, h3, h4, h5, h6, figure {
   -ms-border-radius: 50%;
   border-radius: 50%;
 }
+#fh5co-logo:before{
+     width: 350px !important;
+}
+
 .fh5co-nav #fh5co-logo h1 {
   font-family: "Sacramento", cursive !important;
   font-size: 50px;

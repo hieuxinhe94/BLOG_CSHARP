@@ -1710,9 +1710,9 @@ a:hover,a:focus{
 }
 
 #contact{
-	background:#333333;
-	color:#f4f4f4;
-	padding-bottom:80px;
+	background:#ddd;
+	color:black;
+	padding-bottom:50px;
 }
 
 textarea.form-control{
@@ -1996,4 +1996,81 @@ textarea.form-control{
 .menu a:hover {
     text-decoration: none;
     opacity: 1;
+}
+       login_body {
+  background-color:#fff;
+  -webkit-font-smoothing: antialiased;
+  font: normal 14px Roboto,arial,sans-serif;
+  margin-top:50px;
+}
+
+
+
+.form-login {
+    background-color: #EDEDED;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 20px;
+    border-radius: 15px;
+    border-color:#d2d2d2;
+    border-width: 5px;
+    box-shadow:0 1px 0 #cfcfcf;
+    margin-top:100px;
+    margin-left:-50px;
+}
+
+h4 { 
+ border:0 solid #fff; 
+ border-bottom-width:1px;
+ padding-bottom:10px;
+ text-align: center;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.login_wrapper {
+    text-align: center;
+}
+input,
+input::-webkit-input-placeholder {
+    font-size: 11px;
+    padding-top: 3px;
+}
+
+.main-login{
+ 	background-color: #fff;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+}
+
+.main-center{
+ 	margin-top: 30px;
+ 	margin: 0 auto;
+ 	max-width: 500px;
+    padding: 40px 40px;
+
+}
+
+.login-button{
+	margin-top: 5px;
+}
+
+.login-register{
+	font-size: 11px;
+	text-align: center;
+}
+h6.title { 
+	font-size: 14px;
+	font-family: 'Passion One', cursive; 
+	font-weight: 400; 
+    color:blueviolet;
 }

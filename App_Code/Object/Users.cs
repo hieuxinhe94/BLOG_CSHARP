@@ -19,7 +19,7 @@ public class Users
 	}
 
     #region menthod getDataAll
-    DataTable getDataAll()
+  public  DataTable getDataAll(int state = -1)
     {
         DataTable objTbl = new DataTable();
         try
@@ -27,7 +27,8 @@ public class Users
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM tblUser"; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            cmd.CommandText = "SELECT * FROM tblUser "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            if (state != -1) { cmd.CommandText += " WHERE tblUser.State = "+state+""; }
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             DataSet ds = new DataSet();
@@ -49,7 +50,35 @@ public class Users
        
     }
     #endregion
-    DataTable getUserProfileById( string UserId)
+
+  #region size()
+  public int size(int state = -1)
+  {
+      DataTable objTbl = new DataTable();
+      try
+      {
+          SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
+          sqlConn.Open();
+          SqlCommand cmd = sqlConn.CreateCommand();
+          cmd.CommandText = "SELECT COUNT (tblUser.UserId) FROM tblUser "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+          if (state != -1)
+          {
+              cmd.CommandText += " WHERE tblUser.State = " + state + "";
+          }
+          var passWord = cmd.ExecuteScalar();
+
+          sqlConn.Close();
+          sqlConn.Dispose();
+          return (int)passWord;
+      }
+      catch (Exception e)
+      {
+          Console.Write(e);
+          return 0;
+      }
+  }
+  #endregion
+  public DataTable getUserProfileById(string UserId)
     {
         DataTable objTbl = new DataTable();
         try
@@ -57,8 +86,8 @@ public class Users
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM tblUser WHERE tblUser.Id = @Id "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
-            cmd.Parameters.Add("Id", SqlDbType.Int).Value = (UserId);
+            cmd.CommandText = "SELECT * FROM tblUser WHERE tblUser.UserId = @UserId "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            cmd.Parameters.Add("UserId", SqlDbType.Int).Value = (UserId);
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             DataSet ds = new DataSet();
@@ -78,7 +107,7 @@ public class Users
         }
         return objTbl;
     }
-    DataTable getUserByAccount(string userAccount)
+  public DataTable getUserByAccount(string userAccount)
     {
         DataTable objTbl = new DataTable();
         try
@@ -86,8 +115,8 @@ public class Users
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM tblUser WHERE tblUser.Account = @Account "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
-            cmd.Parameters.Add("Account", SqlDbType.NVarChar).Value = (userAccount);
+            cmd.CommandText = "SELECT * FROM tblUser WHERE tblUser.UserAccount = @UserAccount "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            cmd.Parameters.Add("UserAccount", SqlDbType.NVarChar).Value = (userAccount);
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             DataSet ds = new DataSet();
@@ -107,8 +136,8 @@ public class Users
         }
         return objTbl;
     }
-    
-    int checkMatchPassword(string userAccount ,string userPassword)
+
+  public int checkMatchPassword(string userAccount, string userPassword)
     {
         DataTable objTbl = new DataTable();
         try
@@ -116,8 +145,8 @@ public class Users
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = "SELECT tblUser.UserPassword FROM tblUser WHERE tblUser.Account = @Account "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
-            cmd.Parameters.Add("Account", SqlDbType.NVarChar).Value = (userAccount);
+            cmd.CommandText = "SELECT tblUser.UserPassword FROM tblUser WHERE tblUser.UserAccount = @UserAccount "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            cmd.Parameters.Add("UserAccount", SqlDbType.NVarChar).Value = (userAccount);
 
             var passWord = cmd.ExecuteScalar();
             if(passWord != null)
@@ -139,7 +168,7 @@ public class Users
         return 0;
 
     }
-    int addUsers(string userName , string userPassword , string userImg, string userSlogen , string userEmail , string userPhone , string userAddress , bool userState = true)
+  public int addUsers(string userName,string userAccount, string userPassword, string userImg, string userSlogen, string userEmail, string userPhone, string userAdress, bool userState = true)
     {
         
         try
@@ -147,15 +176,16 @@ public class Users
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = " INSERT INTO tblUser ( UserName, UserPassword , UserImg, UserSlogen ,UserEmail , UserPhone ,UserAddress , UserState ) "
-                                        + " VALUES ( @UserName , @UserPassword , @UserImg , @UserSlogen ,@UserEmail , @UserPhone ,@UserAddress ,@UserState ) ; "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            cmd.CommandText = " INSERT INTO tblUser ( UserName,UserAccount, UserPassword , UserImg, UserSlogen ,UserEmail , UserPhone ,UserAdress , UserState ) "
+                                        + " VALUES ( @UserName,@UserAccount , @UserPassword , @UserImg , @UserSlogen ,@UserEmail , @UserPhone ,@UserAdress ,@UserState ) ; "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
             cmd.Parameters.Add("UserName", SqlDbType.NVarChar).Value = (userName);
+            cmd.Parameters.Add("UserAccount", SqlDbType.NVarChar).Value = (userAccount);
             cmd.Parameters.Add("UserPassword", SqlDbType.NVarChar).Value = (userPassword);
             cmd.Parameters.Add("UserImg", SqlDbType.NVarChar).Value = (userImg);
             cmd.Parameters.Add("UserSlogen", SqlDbType.NVarChar).Value = (userSlogen);
             cmd.Parameters.Add("UserEmail", SqlDbType.NVarChar).Value = (userEmail);
             cmd.Parameters.Add("UserPhone", SqlDbType.NVarChar).Value = (userPhone);
-            cmd.Parameters.Add("UserAddress", SqlDbType.NVarChar).Value = (userAddress);
+            cmd.Parameters.Add("UserAdress", SqlDbType.NVarChar).Value = (userAdress);
             cmd.Parameters.Add("UserState", SqlDbType.Bit).Value = (userState);
 
             cmd.ExecuteNonQuery();
@@ -173,18 +203,18 @@ public class Users
 
 
     }
-    int addOrUpdateUsers(string userId,string userName, string userPassword, string userImg, string userSlogen, string userEmail, string userPhone, string userAddress, bool userState = true)
+  public int addOrUpdateUsers(string userId, string userName, string userPassword, string userImg, string userSlogen, string userEmail, string userPhone, string userAdress, bool userState = true)
     {
         try
         {
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = " IF NOT EXIST (SELECT tblUser.UserName FROM tblUser WHERE tblUser.UserId = @UserId ) "
-                + " BEGIN  INSERT INTO tblUser ( UserName, UserPassword , UserImg, UserSlogen ,UserEmail , UserPhone ,UserAddress , UserState ) "
-                                        + " VALUES ( @UserName , @UserPassword , @UserImg , @UserSlogen ,@UserEmail , @UserPhone ,@UserAddress ,@UserState ) END  "
+            cmd.CommandText = " IF NOT EXISTS ( SELECT tblUser.UserName FROM tblUser WHERE tblUser.UserId = @UserId ) "
+                + " BEGIN  INSERT INTO tblUser ( UserName, UserPassword , UserImg, UserSlogen ,UserEmail , UserPhone ,UserAdress , UserState ) "
+                                        + " VALUES ( @UserName , @UserPassword , @UserImg , @UserSlogen ,@UserEmail , @UserPhone ,@UserAdress ,@UserState ) END  "
             + "ELSE  "
-               + "BEGIN  UPDATE  tblUser SET UserName=@UserName AND  UserPassword=@UserPassword AND UserImg= @UserImg AND   UserSlogen = @UserSlogen AND UserEmail= @UserEmail AND UserPhone=@UserPhone AND  UserAddress=@UserAddress AND UserState =@UserState "+
+               + "BEGIN  UPDATE  tblUser SET UserName=@UserName ,  UserPassword=@UserPassword , UserImg= @UserImg ,   UserSlogen = @UserSlogen , UserEmail= @UserEmail , UserPhone=@UserPhone ,  UserAdress=@UserAdress , UserState =@UserState " +
                " WHERE  tblUser.UserId = @UserId " +
                " END";
             cmd.Parameters.Add("UserId", SqlDbType.NVarChar).Value = (userId);
@@ -195,7 +225,7 @@ public class Users
             cmd.Parameters.Add("UserSlogen", SqlDbType.NVarChar).Value = (userSlogen);
             cmd.Parameters.Add("UserEmail", SqlDbType.NVarChar).Value = (userEmail);
             cmd.Parameters.Add("UserPhone", SqlDbType.NVarChar).Value = (userPhone);
-            cmd.Parameters.Add("UserAddress", SqlDbType.NVarChar).Value = (userAddress);
+            cmd.Parameters.Add("UserAdress", SqlDbType.NVarChar).Value = (userAdress);
             cmd.Parameters.Add("UserState", SqlDbType.Bit).Value = (userState);
 
             cmd.ExecuteNonQuery();
@@ -211,7 +241,7 @@ public class Users
 
         return 1;
     }
-    int disableUser(string userId)
+  public int disableUser(string userId)
     {
         try
         {
@@ -236,7 +266,7 @@ public class Users
 
     }
     // Lắm  khi viết ít code cũng được , nhưng cứ mãi ép buộc mình phức tạp hóa lên làm gì nhỉ
-    int enableUser(string userId)
+  public int enableUser(string userId)
     {
         try
         {

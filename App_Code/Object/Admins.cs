@@ -96,7 +96,7 @@ public class Admins
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
             cmd.CommandText = "SELECT * FROM tblAdmin WHERE tblAdmin.AdminAccount =  @AdminAccount "; //or SELECT * FROM tblComment.Id, tblComment.Name ....
-            cmd.Parameters.Add("AdminAccount", SqlDbType.Int).Value = adminAccount;
+            cmd.Parameters.Add("AdminAccount", SqlDbType.NVarChar).Value = adminAccount;
             SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = cmd;
             DataSet ds = new DataSet();
@@ -118,7 +118,7 @@ public class Admins
     #endregion
 
     #region checkMatchPassword()
-    public  int checkMatchPassword(string adminAccount, string adminPassword)
+    public int checkMatchPassword(string adminAccount, string adminPassword, string adminPassword2)
     {
         DataTable objTbl = new DataTable();
         try
@@ -126,8 +126,8 @@ public class Admins
             SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
             sqlConn.Open();
             SqlCommand cmd = sqlConn.CreateCommand();
-            cmd.CommandText = "SELECT tblAdmin.AdminPassword FROM tblUser WHERE tblAdmin.AdminAccount = @AdminAccount "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
-            cmd.Parameters.Add("Account", SqlDbType.NVarChar).Value = (adminAccount);
+            cmd.CommandText = "SELECT tblAdmin.AdminPassword1 FROM tblAdmin WHERE tblAdmin.AdminAccount = @AdminAccount "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            cmd.Parameters.Add("AdminAccount", SqlDbType.NVarChar).Value = (adminAccount);
 
             var passWord = cmd.ExecuteScalar();
             if (passWord != null)
@@ -148,6 +148,34 @@ public class Admins
         }
         return 0;
 
+    }
+    #endregion
+
+    #region size()
+    public int size(int state = -1)
+    {
+        DataTable objTbl = new DataTable();
+        try
+        {
+            SqlConnection sqlConn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["pvhConn"].ConnectionString);
+            sqlConn.Open();
+            SqlCommand cmd = sqlConn.CreateCommand();
+            cmd.CommandText = "SELECT COUNT (tblAdmin.AdminId) FROM tblAdmin "; //or SELECT * FROM tblUser.Id, tblUser.Name .... 
+            if(state != -1)
+            {
+                cmd.CommandText += " WHERE tblAdmin.State = "+state+"";
+            }
+            var passWord = cmd.ExecuteScalar();
+            
+            sqlConn.Close();
+            sqlConn.Dispose();
+            return (int)passWord;
+        }
+        catch (Exception e)
+        {
+            Console.Write(e);
+            return 0;
+        }
     }
     #endregion
 

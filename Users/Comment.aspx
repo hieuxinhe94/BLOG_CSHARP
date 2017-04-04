@@ -8,83 +8,62 @@
     	<div class="row">
 	<!-- Contenedor Principal -->
     <div class="comments-container">
-		<h1>Comentarios <a href="http://creaticode.com">creaticode.com</a></h1>
+		<h1>Nhận xét hàng đầu <a href="#">ngheansunshine.info</a></h1>
 
 		<ul id="comments-list" class="comments-list">
-			<li>
+			<%
+                for (int i = 0; i < objTblPost.Rows.Count; i++ )
+                {
+                %>
+              <li>
 				<div class="comment-main-level">
 					<!-- Avatar -->
 					<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
 					<!-- Contenedor del Comentario -->
 					<div class="comment-box">
 						<div class="comment-head">
-							<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
-							<span>hace 20 minutos</span>
+							<h6 class="comment-name by-author"><a href="#post"><%=objTblPost.Rows[i]["PostTitle"] %></a></h6>
+							<span><%=objTblPost.Rows[i]["PostDayCreate"] %></span>
 							<i class="fa fa-reply"></i>
 							<i class="fa fa-heart"></i>
 						</div>
 						<div class="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                       <%=objTblPost.Rows[i]["PostDescription"] %>
 						</div>
 					</div>
 				</div>
-				<!-- Respuestas de los comentarios -->
-				<ul class="comments-list reply-list">
+                  	<ul class="comments-list reply-list">
+                  <%Comments objComment = new Comments(); %>
+                  <% objTblComment = objComment.getDataByInPost(objTblPost.Rows[i]["PostId"].ToString());        %>
+                  <%for(int j=0 ; j< objTblComment.Rows.Count ; j++){ %>
 					<li>
 						<!-- Avatar -->
 						<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
 						<!-- Contenedor del Comentario -->
 						<div class="comment-box">
 							<div class="comment-head">
-								<h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-								<span>hace 10 minutos</span>
+								<h6 class="comment-name"><a href="#post"><%=objTblPost.Rows[j]["CmtUser"] %> --<</a></h6>
+								<span><%=objTblPost.Rows[j]["CmtDayCreate"] %> </span>
 								<i class="fa fa-reply"></i>
 								<i class="fa fa-heart"></i>
 							</div>
 							<div class="comment-content">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-							</div>
+							<%=objTblPost.Rows[j]["CmtContent"] %>	</div>
 						</div>
 					</li>
-
-					<li>
-						<!-- Avatar -->
-						<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-						<!-- Contenedor del Comentario -->
-						<div class="comment-box">
-							<div class="comment-head">
-								<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
-								<span>hace 10 minutos</span>
-								<i class="fa fa-reply"></i>
-								<i class="fa fa-heart"></i>
-							</div>
-							<div class="comment-content">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-							</div>
-						</div>
-					</li>
-				</ul>
+                  <%} objComment = null; %>
+                   </ul>
+                <%
+                }
+                %>	
 			</li>
+            
+          
+				<!-- Respuestas de los comentarios -->
+			
 
-			<li>
-				<div class="comment-main-level">
-					<!-- Avatar -->
-					<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-					<!-- Contenedor del Comentario -->
-					<div class="comment-box">
-						<div class="comment-head">
-							<h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-							<span>hace 10 minutos</span>
-							<i class="fa fa-reply"></i>
-							<i class="fa fa-heart"></i>
-						</div>
-						<div class="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						</div>
-					</div>
-				</div>
-			</li>
-		</ul>
+                   
+
 	</div>
 	</div>
 </asp:Content>

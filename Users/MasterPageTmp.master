@@ -1,0 +1,44 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPageTmp.master.cs" Inherits="Users_MasterPageTmp" %>
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title> TRANG CÁ NHÂN </title>
+    <link href="css/usersStyle.css" rel="stylesheet" />
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    
+    <script src="../Scripts/jquery-1.10.2.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+           <nav class="navbar  top-navbar" id="top-nav">
+           
+        <div class="container">
+             
+            <div class="navbar-header">
+                <a class="navbar-brand" href="Default.aspx">
+  <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back | Next <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> 
+                </a>
+              
+            </div>
+
+            
+        </div>
+    </nav>
+
+        
+
+    
+        <div style="clear:both;height:1px;"></div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+
+    </form>
+</body>
+</html>
